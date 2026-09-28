@@ -2,6 +2,9 @@
 
 Tune is an offline guitar tuner for Android 10 and newer. It listens through the phone's microphone, finds the closest string in the selected tuning, and shows how far that string is from its target pitch.
 
+<img height="480" alt="Screenshot_20260928_171234_dev angelov tune" src="https://github.com/user-attachments/assets/35311d1e-7d1b-4417-83e9-063ad39db7fc" />
+
+
 ## Install
 
 Download `Tune-v<version>.apk` from the project's GitHub Releases page and open it on your Android phone. If Android blocks the installation, allow APK installation for the app you used to open the file. Grant microphone access when Tune asks for it.
