@@ -126,8 +126,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "Tune-${TAG}.apk" --clobber
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" "Tune-${TAG}.apk" --clobber -R "$GITHUB_REPOSITORY"
           else
-            gh release create "$TAG" "Tune-${TAG}.apk" --verify-tag --generate-notes
+            gh release create "$TAG" "Tune-${TAG}.apk" --verify-tag --generate-notes -R "$GITHUB_REPOSITORY"
           fi

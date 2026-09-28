@@ -92,3 +92,25 @@ Changing `Detected` to `Listening` on every silence event and replacing a detune
 
 - The earlier fixed-height gauge kept the card size steady but still replaced the note with a dash on every silence event; layout height alone did not preserve the reading.
 - The earlier 50-cent cutoff hid the target string and showed a chromatic note; this did not measure deviation from a guitar string.
+## 2026-09-28 — GitHub Release job without checkout
+
+### Goal
+
+Publish a GitHub Release from an Actions job that only downloads an APK artifact.
+
+### Golden path
+
+Pass `-R "$GITHUB_REPOSITORY"` to every `gh release` command in that job so GitHub CLI can identify the repository without a checkout.
+
+### Verification
+
+The `v1.0.1` and `v1.0.4` runs built and signed the APK, then failed in `gh release create` with `fatal: not a git repository`. Outside a Git checkout, `gh release list` reproduced that error and `gh release list -R mikhail-angelov/tune` succeeded. `actionlint` passed after the workflow change. End-to-end release publishing still needs a run of the updated workflow.
+
+### Failure pattern avoided
+
+`gh` tries to infer the repository from Git when an Actions job has no checkout, so a publish step fails after all build and signing steps succeed.
+
+### Ruled-out approaches
+
+- Investigating missing signing secrets did not explain the failure: the `Sign and verify APK` step succeeded in both runs.
+- Leaving repository detection implicit failed in an artifact-only job because it has no `.git` directory.
